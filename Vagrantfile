@@ -19,9 +19,8 @@ Vagrant.configure('2') do |config|
   (1..3).each do |i|
     config.vm.define "instance_#{i}" do |instance|
       instance.vm.provider :openstack do |os|
-        os.server_name      = "coreos-#{i}"
-        os.networks         << 'coreos-network'
-        #os.floating_ip_pool = ENV['OS_FLOATING_IP_POOL']
+        os.server_name      = "deis-#{i}"
+        os.networks         << ENV['OS_NETWORK_NAME']
         os.user_data = File.open("cloud-config.yml", "rb").read
       end
     end
