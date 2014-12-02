@@ -17,11 +17,11 @@ Vagrant.configure('2') do |config|
   end
 
   (1..3).each do |i|
-    config.vm.define "instance_#{i}" do |instance|
+    config.vm.define "deis-#{i}" do |instance|
       instance.vm.provider :openstack do |os|
         os.server_name      = "deis-#{i}"
         os.networks         << ENV['OS_NETWORK_NAME']
-        os.user_data = File.open("cloud-config.yml", "rb").read
+        os.user_data        = File.open("cloud-config.yml", "rb").read.gsub! '$etcd_token', ENV['ETCD_TOKEN']
       end
     end
   end
